@@ -1,14 +1,15 @@
-import React from 'react'
 import { Outlet } from 'react-router-dom'
+import  CJR_Bricks  from '../assets/Logo'
+import GoogleButton from './Google'
 
 export default function Layout() {
   return (
     <>
-        <header class="bg-indigo-500">
-          <h1>Opa! Turu bom?</h1>
+        <header className="p-[.8%] bg-[#DEDEDE] w-screen flex justify-between">
+          <CJR_Bricks />
+          <GoogleButton />
         </header>
         <main>
-          <h1>Opa! Turu bom?</h1>
           <Outlet />
         </main>
     </>
