@@ -1,4 +1,4 @@
-function mainPage() {
+function Home() {
   return (
     <>
       <h1>Olá mundo!</h1>
@@ -6,4 +6,4 @@ function mainPage() {
   )
 }
 
-export default mainPage
+export default Home

@@ -1,11 +1,14 @@
 import { Routes, Route } from 'react-router-dom'
-import  mainPage  from './pages/main-page'
+import  Home  from './pages/Home'
+
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={mainPage()} />
-      <Route path="profile" element={<h1>Profile</h1>} />
+      <Route path="/" element={<Layout/>}>
+        <Route index element={<Home />} />
+        <Route path="profile" element={<h1>Profile</h1>} />
+      </Route>
     </Routes>
   )
 }
