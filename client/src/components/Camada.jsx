@@ -1,4 +1,4 @@
-import { TIJNAV, TIJNOE, TIJNIP, TIJNDP, TIJNUT } from '../../constantes'
+// import { BGTIJNAV, BGTIJNOE, BGTIJNIP, BGTIJNDP, BGTIJNUT } from '../../constantes'
 import  TijoloNUC  from './TijoloNucleo'
 
 
@@ -7,7 +7,7 @@ export default function Camada() {
     avatar: 'https://avatars.githubusercontent.com/u/62450919',
     userName: 'Cássio',
     userID: '1',
-    nucleo: 'NAV',
+    nucleo: 'NDP',
   }]
 
   return (
@@ -20,11 +20,10 @@ export default function Camada() {
 function getNucleoColor(nucleo) {
 
   switch (nucleo) {
-    case 'NAV' : return TIJNAV
-    case 'NOE' : return TIJNOE
-    case 'NIP' : return TIJNIP
-    case 'NDP' : return TIJNDP
-    default : return TIJNUT
-  
+    case 'NAV' : return 'bg-tijNAV'
+    case 'NOE' : return 'bg-tijNOE'
+    case 'NIP' : return 'bg-tijNIP'
+    case 'NDP' : return 'bg-tijNDP'
+    default    : return 'bg-tijNUT'
   }
 }

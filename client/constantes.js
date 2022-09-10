@@ -1,7 +1,5 @@
-export const TIJNAV = 'tijNAV'
-export const TIJNOE = 'tijNOE'
-export const TIJNIP = 'tijNIP'
-export const TIJNDP = 'tijNDP'
-export const TIJNUT = 'tijNUT'
-
-
+export const BGTIJNAV = 'bg-tijNAV'
+export const BGTIJNOE = 'bg-tijNOE'
+export const BGTIJNIP = 'bg-tijNIP'
+export const BGTIJNDP = 'bg-tijNDP'
+export const BGTIJNUT = 'bg-tijNUT'

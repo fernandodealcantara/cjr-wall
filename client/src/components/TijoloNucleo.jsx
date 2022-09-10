@@ -1,10 +1,10 @@
 // const icone = 'https://avatars.githubusercontent.com/u/62450919'
 
-export default function TijoloNUC({color, avatar, userName}) {
+export default function TijoloNUC({color, avatar, userName, userID}) {
   return (
     <div
       className={
-        `w-[18rem] h-[6.5rem] rounded-lg border-4 border-[#000000] bg-center bg-no-repeat bg-cover flex items-center gap-x-[5rem] px-[1rem] bg-origin-border bg-${color}`
+        `w-[18rem] h-[6.5rem] rounded-lg border-4 border-[#000000] bg-center bg-no-repeat bg-cover flex items-center gap-x-[5rem] px-[1rem] bg-origin-border ${color}`
       }
     >
       <img
