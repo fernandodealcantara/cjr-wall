@@ -18,7 +18,7 @@ export default function GoogleButton() {
     
         google.accounts.id.renderButton(
             document.getElementById("signInDiv"),
-            {theme: "outline", size: "small"}
+            {theme: "outline", size: "large"}
         )
     }, [])
     return (
