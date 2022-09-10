@@ -1,7 +1,9 @@
+import Camada from '../components/Camada'
+
 function Home() {
   return (
     <>
-      <h1>Olá mundo!</h1>
+      <Camada />
     </>
   )
 }
