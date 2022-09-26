@@ -8,7 +8,6 @@ function handleCallbackResponse(response) {
 }
 
 export default function GoogleButton() {
-
     useEffect(() => {
         /* global google */
         google.accounts.id.initialize({
