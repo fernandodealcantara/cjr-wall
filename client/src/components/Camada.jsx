@@ -1,15 +1,6 @@
 import TijoloNUC from './TijoloNucleo'
 
-export default function Camada() {
-  const users = [
-    {
-      avatar: 'https://avatars.githubusercontent.com/u/62450919',
-      userName: 'Cassio',
-      userID: '1',
-      nucleo: 'NOE',
-    },
-  ]
-
+export default function Camada({users}) {
   return (
     <div className="flex">
       {users.map((user) => (
