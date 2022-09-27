@@ -21,14 +21,14 @@ export async function getUsers() {
         {
           avatar:
             'https://ca.slack-edge.com/T08QYLWLU-U02DHJU2NSD-80081d4f05df-512',
-          userName: 'Lucas Sala',
+          userName: 'Lucas S.',
           userID: '3',
           nucleo: 'NUT',
         },
         {
           avatar:
             'https://ca.slack-edge.com/T08QYLWLU-UJFAPAML4-4e08c5bf0731-512',
-          userName: 'Lucas Pinheiro',
+          userName: 'Lucas P.',
           userID: '4',
           nucleo: 'NIP',
         },
