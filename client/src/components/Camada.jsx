@@ -1,7 +1,7 @@
 import TijoloNUC from './TijoloNucleo'
 import { getBackgroundColorByNucleo } from '../services/colors'
 
-export default function Camada({users}) {
+export default function Camada({ users }) {
   return (
     <div className="flex">
       {users.map((user) => (
