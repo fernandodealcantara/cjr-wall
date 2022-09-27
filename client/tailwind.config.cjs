@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     colors: {
       'NAV': '#6A1612;',
-      'NAVCard': '#9D1C15;',
+      'NAVCard': '#851610;',
       'NUT': '#1D3557;',
       'NUTCard': '#457B9D;',
       'NOE': '#0B5F2F;',
