@@ -1,4 +1,4 @@
-export default function TijoloNUC({ color, avatar, userName, userID }) {
+export default function Brick({ color, avatar, userName }) {
   return (
     <div
       className={`w-[18rem] h-[6.5rem] rounded-lg border-4 border-[#000000] bg-center bg-no-repeat bg-cover flex items-center gap-x-[5rem] px-[1rem] bg-origin-border ${color}`}

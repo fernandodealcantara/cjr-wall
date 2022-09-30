@@ -1,6 +1,7 @@
-import Camada from '../components/Camada'
 import { useState, useEffect } from 'react'
 import { getUsers } from '../services/api'
+import Brick from '../components/Brick'
+import { getBackgroundColorByNucleo } from '../services/colors'
 
 function Home() {
   const [users, setUsers] = useState([])
@@ -8,10 +9,21 @@ function Home() {
   useEffect(() => {
     getUsers()
       .then((users) => setUsers(users))
-      .catch((_err) => setUsers([]))
+      .catch(() => setUsers([]))
   }, [])
 
-  return <Camada users={users} />
+  return (
+    <div className="flex">
+      {users.map((user) => (
+        <Brick
+          key={user.userID}
+          color={getBackgroundColorByNucleo(user.nucleo)}
+          avatar={user.avatar}
+          userName={user.userName}
+        />
+      ))}
+    </div>
+  )
 }
 
 export default Home
