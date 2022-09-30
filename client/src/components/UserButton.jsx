@@ -12,9 +12,7 @@ export default function UserButton() {
 
   useEffect(() => {
     function handleCallbackResponse(response) {
-      console.log(response.select_by)
       const userObject = jwtDecode(response.credential)
-      // console.log(userObject)
 
       auth.signin(userObject, () => {
         navigate(from, { replace: true })
@@ -25,11 +23,10 @@ export default function UserButton() {
     /* global google */
     google.accounts.id.initialize({
       client_id: import.meta.env.VITE_CLIENT_ID,
-      callback: handleCallbackResponse,
-      auto_select: true,
+      callback: handleCallbackResponse
     })
 
-    google.accounts.id.renderButton(document.getElementById('loginButton'), {
+    google.accounts.id.renderButton(document.getElementById('signInDiv'), {
       type: 'standard',
       theme: 'outline',
       shape: 'circle',
