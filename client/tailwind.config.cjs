@@ -6,16 +6,16 @@ module.exports = {
   content: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
   theme: {
     colors: {
-      'NAV': '#6A1612;',
-      'NAVCard': '#851610;',
-      'NUT': '#1D3557;',
-      'NUTCard': '#457B9D;',
-      'NOE': '#0B5F2F;',
-      'NOECard': '#0D9347;',
-      'NIP': '#6C2144;',
-      'NIPCard': '#AE326C;',
-      'NDP': '#39484F;',
-      'NDPCard': '#607D8B;',
+      'NAV': '#6A1612',
+      'NAVCard': '#851610',
+      'NUT': '#1D3557',
+      'NUTCard': '#457B9D',
+      'NOE': '#0B5F2F',
+      'NOECard': '#0D9347',
+      'NIP': '#6C2144',
+      'NIPCard': '#AE326C',
+      'NDP': '#39484F',
+      'NDPCard': '#607D8B',
     },
     extend: {
       backgroundImage: {
