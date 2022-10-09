@@ -1,13 +1,25 @@
 import { Outlet } from 'react-router-dom'
-import CJR_Bricks from '../assets/Logo'
-import UserButton from './UserButton'
+import Logo from '../assets/logo.svg'
+import LoginButton from './LoginButton'
+import UserInformation from './UserInformation'
+import { useAuth } from '../contexts/AuthContext'
+import Spinner from './Spinner'
+import { Link } from  "react-router-dom"
 
 export default function Layout() {
+  const { user } = useAuth()
+
   return (
     <>
-      <header className="p-[.8%] bg-[#DEDEDE] w-screen flex justify-between">
-        <CJR_Bricks />
-        <UserButton />
+      <header className="h-12 p-[.5%] bg-[#DEDEDE] flex items-center justify-between">
+        <Link to="/"><img src={Logo} className="h-9 w-auto"/></Link>
+        <Link to="profile"> {user === null ? (
+          <Spinner />
+        ) : user ? (
+          <UserInformation />
+        ) : (
+          <LoginButton />
+        )}</Link>
       </header>
       <main>
         <Outlet />

@@ -4,6 +4,7 @@ import { RequireAuth } from './components/RequireAuth'
 import Home from './pages/Home'
 import Profile from './pages/Profile'
 import Layout from './components/Layout'
+import BrickProfile from './pages/BrickProfile'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
+          <Route path="profile/:userId" element={<BrickProfile />} />
           <Route
             path="profile"
             element={

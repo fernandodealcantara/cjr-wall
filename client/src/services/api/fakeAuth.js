@@ -1,13 +1,16 @@
+import jwtDecode from 'jwt-decode'
+
 const fakeAuthProvider = {
   isAuthenticated: false,
-  signin(callback) {
+  signin(credentials, cb) {
     fakeAuthProvider.isAuthenticated = true
-    setTimeout(callback, 100) // fake async
+    const user = jwtDecode(credentials)
+    setTimeout(() => cb(user), 100) // fake async
   },
-  signout(callback) {
+  signout(cb) {
     fakeAuthProvider.isAuthenticated = false
-    setTimeout(callback, 100)
+    setTimeout(cb, 100)
   },
 }
 
-export { fakeAuthProvider }
+export default fakeAuthProvider
