@@ -25,7 +25,6 @@ function BrickProfile() {
   const fetchUserInfo = async () => {
     try {
       const data = await api.data.getBrickUser(userId)
-      console.log(data)
 
       if (data) {
         const { socialLinks, markdown, ...userInfo } = data
@@ -36,13 +35,13 @@ function BrickProfile() {
         setMarkdown('')
       }
     } catch (err) {
-      console.log(err)
+      console.error(err)
       setUser(false)
     }
   }
 
   useEffect(() => {
-    if (!user) fetchUserInfo()
+    fetchUserInfo()
   }, [])
 
   if (user === null) {
@@ -57,7 +56,7 @@ function BrickProfile() {
       >
         <img className="w-20 h-20 rounded-full" src={user.picture} alt="" />
         <p className="font-medium dark:text-white text-center">{user.name}</p>
-        <p className="my-1">Perfis de redes sociais</p>
+        <p className="mt-3">Perfis de redes sociais</p>
         <div className="flex gap-3 mt-5">
           <InstagramButton href={socialLinks.instagram} target="_blank" />
           <TwitterButton href={socialLinks.twitter} target="_blank" />

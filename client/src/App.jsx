@@ -12,15 +12,18 @@ function App() {
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="profile/:userId" element={<BrickProfile />} />
-          <Route
-            path="profile"
-            element={
-              <RequireAuth>
-                <Profile />
-              </RequireAuth>
-            }
-          />
+          <Route path="profile">
+            <Route
+              index
+              element={
+                <RequireAuth>
+                  <Profile />
+                </RequireAuth>
+              }
+            />
+            <Route path=":userId" element={<BrickProfile />} />
+          </Route>
+          <Route path="*" element={<h1>Nada por aqui 😜</h1>} />
         </Route>
       </Routes>
     </AuthProvider>

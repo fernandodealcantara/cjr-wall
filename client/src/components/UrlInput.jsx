@@ -1,11 +1,11 @@
-export default function UrlInput({ Icon, name, labelText, placeholder, disabled, onChange, value }) {
+export default function UrlInput({ Icon, name, labelText, placeholder, onChange, value, ...props }) {
   return (
     <div className="mb-1 max-w-[15rem]">
       <label
         htmlFor={name}
         className="mb-1 text-gray-300 flex items-center gap-1"
       >
-        <Icon /> {labelText}
+       {Icon && <Icon />} {labelText}
       </label>
       <input
         onChange={onChange}
@@ -29,7 +29,7 @@ export default function UrlInput({ Icon, name, labelText, placeholder, disabled,
         id={name}
         name={name}
         placeholder={placeholder}
-        disabled={disabled}
+        {...props}
       />
     </div>
   )

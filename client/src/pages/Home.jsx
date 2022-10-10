@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import CardsList from '../components/CardsContainer'
+import CardsList from '../components/CardsList'
 import api from '../services/api'
 import { useWindowSize } from '../hooks/useWindowSize'
 
@@ -33,6 +33,7 @@ function Home() {
         setNextPage(response.next_page)
       } catch (error) {
         console.error(error)
+        setNextPage(null)
       } finally {
         setIsLoading(false)
       }
@@ -58,7 +59,7 @@ function Home() {
     <CardsList
       hasNextPage={nextPage}
       isNextPageLoading={isLoading}
-      usersRows={usersRows}
+      rows={usersRows}
       loadNextPage={loadNextPage}
       columnsQtd={usersPerRow}
       listHeight={listHeight}

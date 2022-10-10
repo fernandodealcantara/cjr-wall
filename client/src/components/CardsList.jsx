@@ -4,12 +4,10 @@ import InfiniteLoader from 'react-window-infinite-loader'
 import memoize from 'memoize-one'
 import { getBackgroundColorByNucleo } from '../services/colors'
 import CardBrick, { CardBrickSkeleton } from './CardBrick'
-import { Link } from 'react-router-dom'
-
 // useMemo, memo e memoize são recursos que vão ser utilizados para melhorar a performance do App
 
-export default function CardsContainer({
-  usersRows,
+export default function CardsList({
+  rows,
   hasNextPage,
   isNextPageLoading,
   loadNextPage,
@@ -18,15 +16,15 @@ export default function CardsContainer({
   listItemHeight,
 }) {
   // Retorna um skeleton (esqueleto) dos usuários (users) que serão exibidos na tela ao scrollar
-  const ChunkSkeleton = Array.from(Array(columnsQtd).keys()).map((key) => (
+  const RowSkeleton = Array.from(Array(columnsQtd).keys()).map((key) => (
     <CardBrickSkeleton key={key} />
   ))
 
-  const itemCount = hasNextPage ? usersRows.length + 1 : usersRows.length
+  const itemCount = hasNextPage ? rows.length + 1 : rows.length
   const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage
-  const isItemLoaded = (index) => !hasNextPage || index < usersRows.length
+  const isItemLoaded = (index) => !hasNextPage || index < rows.length
 
-  const itemData = createItemData(usersRows, ChunkSkeleton, isItemLoaded)
+  const itemData = createItemData(rows, RowSkeleton, isItemLoaded)
 
   return (
     <InfiniteLoader
@@ -53,39 +51,35 @@ export default function CardsContainer({
   )
 }
 
-const createItemData = memoize((usersRows, ChunkSkeleton, isItemLoaded) => ({
-  usersRows,
-  ChunkSkeleton,
+const createItemData = memoize((rows, RowSkeleton, isItemLoaded) => ({
+  rows,
+  RowSkeleton,
   isItemLoaded,
 }))
 
 const Row = memo(({ data, index, style, isScrolling }) => {
-  const { usersRows, ChunkSkeleton, isItemLoaded } = data
+  const { rows, RowSkeleton, isItemLoaded } = data
 
-  const chunk = usersRows[index]
+  const columns = rows[index]
 
   return (
     <div style={style}>
-      <div className={`flex justify-center gap-1`}>
+      <div className={`flex justify-center gap-3`}>
         {!isItemLoaded(index) || isScrolling
-          ? ChunkSkeleton
-          : chunk.map((user, key) =>
-              user ? (
-                <Link key={user.id} to={`profile/${user.id}`}>
-                  <CardBrick
-                    color={getBackgroundColorByNucleo(user.department)}
-                    picture={user.picture}
-                    name={
-                      user.name.split(' ')[0].length > 10
-                        ? user.name.split(' ')[0].slice(0, 10) + '...'
-                        : user.name.split(' ')[0]
-                    }
-                  />
-                </Link>
-              ) : (
-                <div key={key} className="hidden" />
-              )
-            )}
+          ? RowSkeleton
+          : columns.map((user) => (
+              <CardBrick
+                key={user.id}
+                color={getBackgroundColorByNucleo(user.department)}
+                picture={user.picture}
+                name={
+                  user.name.split(' ')[0].length > 10
+                    ? user.name.split(' ')[0].slice(0, 10) + '...'
+                    : user.name.split(' ')[0]
+                }
+                userId={user.id}
+              />
+            ))}
       </div>
     </div>
   )

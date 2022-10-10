@@ -33,7 +33,7 @@ function Profile() {
     setMarkdown(data)
   }
 
-  useEffect(() => {
+  const fetchUserInfo = () => {
     const data = api.data.getUserInfo(user.sub)
     if (data) {
       setMarkdown(data.markdown)
@@ -45,6 +45,10 @@ function Profile() {
         }!\n## Fale sobre a sua jornada na CJR =)`
       )
     }
+  }
+
+  useEffect(() => {
+    fetchUserInfo()
   }, [])
 
   return (

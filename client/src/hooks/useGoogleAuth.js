@@ -19,6 +19,7 @@ export function useGoogleAuth(ref, callback = () => {}) {
         theme: 'outline',
         shape: 'circle',
       })
+      
     }
   }, [ref.current, callback])
 }

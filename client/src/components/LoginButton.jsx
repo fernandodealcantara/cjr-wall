@@ -19,5 +19,5 @@ export default function LoginButton() {
     }
   })
 
-  return <div ref={ref} id="googleSignIn" />
+  return <div ref={ref} />
 }
