@@ -57,7 +57,7 @@ function BrickProfile() {
         <img className="w-20 h-20 rounded-full" src={user.picture} alt="" />
         <p className="font-medium dark:text-white text-center">{user.name}</p>
         <p className="mt-3">Perfis de redes sociais</p>
-        <div className="flex gap-3 mt-5">
+        <div className="flex flex-wrap justify-center gap-3 mt-5">
           <InstagramButton href={socialLinks.instagram} target="_blank" />
           <TwitterButton href={socialLinks.twitter} target="_blank" />
           <GitHubButton href={socialLinks.github} target="_blank" />
