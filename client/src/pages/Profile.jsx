@@ -23,8 +23,22 @@ function Profile() {
   })
   const [department, setDepartment] = useState('')
 
-  const handleSave = () => {
-    api.data.postUserInfo(user.sub, markdown, socialLinks, department)
+  const handleSave = async () => {
+    try {
+      const data = await api.data.postUserInfo(
+        user.sub,
+        markdown,
+        socialLinks,
+        department
+      )
+      setMarkdown(data.markdown)
+      setSocialLinks(data.socialLinks)
+      setDepartment(data.department)
+      alert('Perfil salvo com sucesso.')
+    } catch (error) {
+      console.error(error)
+      alert('Erro ao salvar perfil, tente novamente mais tarde.')
+    }
   }
 
   const handleDepartmentChange = (e) => {
@@ -39,18 +53,15 @@ function Profile() {
     setMarkdown(data)
   }
 
-  const fetchUserInfo = () => {
-    const data = api.data.getUserInfo(user.sub)
-    if (data) {
+  const fetchUserInfo = async () => {
+    try {
+      const data = await api.data.getUserInfo(user.sub)
+
       setMarkdown(data.markdown)
       setSocialLinks(data.socialLinks)
       setDepartment(data.department)
-    } else {
-      setMarkdown(
-        `# Bem vindo ${
-          user.name.split(' ')[0]
-        }!\n## Fale sobre a sua jornada na CJR =)`
-      )
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -65,8 +76,13 @@ function Profile() {
         col-span-1 md:col-span-3 p-5 h-fit gap-1"
       >
         <img className="w-20 h-20 rounded-full" src={user.picture} alt="" />
-        <p className="font-medium dark:text-white text-center mb-4">{user.name}</p>
-        <DepartmentsRadioInput onChange={handleDepartmentChange} value={department} />
+        <p className="font-medium dark:text-white text-center mb-4">
+          {user.name}
+        </p>
+        <DepartmentsRadioInput
+          onChange={handleDepartmentChange}
+          value={department}
+        />
         <p className="my-1">Perfis de redes sociais</p>
         <UrlInput
           name="instagram"

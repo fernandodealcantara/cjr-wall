@@ -1,45 +1,48 @@
-export async function getUsers(page = 1) {
-  const url = `${import.meta.env.VITE_MOCK_DATA_API}/users?page=${page}`
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+import fakeData from './fakeData'
+
+function getUsers(page = 1) {
+  // fake async
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      if (page < 1 || page > fakeData.pages.length)
+        return { next_page: null, users: [] }
+
+      resolve(fakeData.pages[page - 1])
+    }, 100)
   })
-  const data = await response.json()
-  return data
 }
 
 function getUserInfo(userId) {
-  const storedData = JSON.parse(localStorage.getItem(`${userId}`))
-  return storedData
+  // fake async
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const storedData = JSON.parse(localStorage.getItem(`${userId}`))
+      if (storedData) {
+        resolve(storedData)
+      } else {
+        resolve({ ...fakeData.individualUser, id: userId })
+      }
+    }, 100)
+  })
 }
 
 function postUserInfo(userId, markdown, socialLinks, department) {
-  const content = JSON.stringify({ markdown, socialLinks, department })
-  localStorage.setItem(`${userId}`, content)
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      const prevContent = JSON.parse(localStorage.getItem(`${userId}`))
+      const content = JSON.stringify({ ...prevContent, markdown, socialLinks, department })
+      localStorage.setItem(`${userId}`, content)
 
-  return { markdown, socialLinks, department }
-}
-
-async function getBrickUser(userId) {
-  const url = `${import.meta.env.VITE_MOCK_DATA_API}/users/${userId}`
-  const response = await fetch(url, {
-    method: 'GET',
-    headers: {
-      'Content-Type': 'application/json',
-    },
+      resolve({ markdown, socialLinks, department })
+    }, 100)
   })
-
-  const data = await response.json()
-  return data
 }
+
 
 const fakeDataProvider = {
   getUsers,
   getUserInfo,
   postUserInfo,
-  getBrickUser,
 }
 
 export default fakeDataProvider

@@ -24,7 +24,7 @@ function BrickProfile() {
 
   const fetchUserInfo = async () => {
     try {
-      const data = await api.data.getBrickUser(userId)
+      const data = await api.data.getUserInfo(userId)
 
       if (data) {
         const { socialLinks, markdown, ...userInfo } = data

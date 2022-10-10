@@ -11,7 +11,7 @@ export default function Layout() {
 
   return (
     <>
-      <header className="h-12 p-[.5%] bg-[#DEDEDE] flex items-center justify-between w-[100vw]">
+      <header className="h-12 p-[.5%] bg-[#DEDEDE] flex items-center justify-between w-[100%]">
         <Link to="/">
           <img src={Logo} className="h-9 w-auto" />
         </Link>
@@ -23,7 +23,7 @@ export default function Layout() {
           <LoginButton />
         )}
       </header>
-      <main className='w-[100vw]' >
+      <main className='w-[100%]' >
         <Outlet />
       </main>
     </>
