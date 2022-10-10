@@ -10,6 +10,7 @@ import {
 } from '../components/SocialButtons'
 import UrlInput from '../components/UrlInput'
 import api from '../services/api'
+import DepartmentsRadioInput from '../components/DepartmentsRadioInput'
 
 function Profile() {
   const { user } = useAuth()
@@ -20,9 +21,14 @@ function Profile() {
     linkedin: '',
     twitter: '',
   })
+  const [department, setDepartment] = useState('')
 
   const handleSave = () => {
-    api.data.postUserInfo(user.sub, markdown, socialLinks)
+    api.data.postUserInfo(user.sub, markdown, socialLinks, department)
+  }
+
+  const handleDepartmentChange = (e) => {
+    setDepartment(e.target.value)
   }
 
   const handleSocialLinkChange = (event) => {
@@ -38,6 +44,7 @@ function Profile() {
     if (data) {
       setMarkdown(data.markdown)
       setSocialLinks(data.socialLinks)
+      setDepartment(data.department)
     } else {
       setMarkdown(
         `# Bem vindo ${
@@ -55,10 +62,11 @@ function Profile() {
     <div className="grid grid-cols-1 md:grid-cols-8 m-auto mt-10 mb-2 w-[80%] gap-3">
       <div
         className="shadow-md shadow-gray-900 flex flex-col items-center rounded-[1rem] bg-[#22223b]
-                    col-span-1 md:col-span-3 p-5 h-fit gap-1"
+        col-span-1 md:col-span-3 p-5 h-fit gap-1"
       >
         <img className="w-20 h-20 rounded-full" src={user.picture} alt="" />
-        <p className="font-medium dark:text-white text-center">{user.name}</p>
+        <p className="font-medium dark:text-white text-center mb-4">{user.name}</p>
+        <DepartmentsRadioInput onChange={handleDepartmentChange} value={department} />
         <p className="my-1">Perfis de redes sociais</p>
         <UrlInput
           name="instagram"

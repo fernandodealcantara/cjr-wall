@@ -15,11 +15,11 @@ function getUserInfo(userId) {
   return storedData
 }
 
-function postUserInfo(userId, markdown, socialLinks) {
-  const content = JSON.stringify({ markdown, socialLinks })
+function postUserInfo(userId, markdown, socialLinks, department) {
+  const content = JSON.stringify({ markdown, socialLinks, department })
   localStorage.setItem(`${userId}`, content)
 
-  return { markdown, socialLinks }
+  return { markdown, socialLinks, department }
 }
 
 async function getBrickUser(userId) {
