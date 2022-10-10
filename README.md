@@ -1,2 +1,6 @@
 # cjr-wall
-Projeto interno da CjR para o processo trainee
+Projeto interno para o processo trainee
+
+Primeira etapa -> Frontend
+
+Segunda etapa -> Backend (não feito)
