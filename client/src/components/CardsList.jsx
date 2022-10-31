@@ -1,6 +1,5 @@
 import { forwardRef, memo } from 'react'
 import { FixedSizeList as List, areEqual } from 'react-window'
-import InfiniteLoader from 'react-window-infinite-loader'
 import memoize from 'memoize-one'
 import { getBackgroundColorByNucleo } from '../services/colors'
 import CardBrick, { CardBrickSkeleton } from './CardBrick'
@@ -8,9 +7,6 @@ import CardBrick, { CardBrickSkeleton } from './CardBrick'
 
 export default function CardsList({
   rows,
-  hasNextPage,
-  isNextPageLoading,
-  loadNextPage,
   columnsQtd,
   listHeight,
   listItemHeight,
@@ -20,57 +16,42 @@ export default function CardsList({
     <CardBrickSkeleton key={key} />
   ))
 
-  const itemCount = hasNextPage ? rows.length + 1 : rows.length
-  const loadMoreItems = isNextPageLoading ? () => {} : loadNextPage
-  const isItemLoaded = (index) => !hasNextPage || index < rows.length
-
-  const itemData = createItemData(rows, RowSkeleton, isItemLoaded)
+  const itemData = createItemData(rows, RowSkeleton)
 
   return (
-    <InfiniteLoader
-      isItemLoaded={isItemLoaded}
-      itemCount={itemCount}
-      loadMoreItems={loadMoreItems}
+    <List
+      itemCount={rows.length}
+      height={listHeight}
+      itemSize={listItemHeight}
+      itemData={itemData}
+      width="100%"
+      innerElementType={innerElementType}
+      useIsScrolling
     >
-      {({ onItemsRendered, ref }) => (
-        <List
-          itemCount={itemCount}
-          height={listHeight}
-          itemSize={listItemHeight}
-          itemData={itemData}
-          width="100%"
-          innerElementType={innerElementType}
-          useIsScrolling
-          onItemsRendered={onItemsRendered}
-          ref={ref}
-        >
-          {Row}
-        </List>
-      )}
-    </InfiniteLoader>
+      {Row}
+    </List>
   )
 }
 
-const createItemData = memoize((rows, RowSkeleton, isItemLoaded) => ({
+const createItemData = memoize((rows, RowSkeleton) => ({
   rows,
   RowSkeleton,
-  isItemLoaded,
 }))
 
 const Row = memo(({ data, index, style, isScrolling }) => {
-  const { rows, RowSkeleton, isItemLoaded } = data
+  const { rows, RowSkeleton } = data
 
   const columns = rows[index]
 
   return (
     <div style={style}>
       <div className={`flex justify-center gap-3`}>
-        {!isItemLoaded(index) || isScrolling
+        {isScrolling
           ? RowSkeleton
           : columns.map((user) => (
               <CardBrick
                 key={user.id}
-                color={getBackgroundColorByNucleo(user.department)}
+                color={getBackgroundColorByNucleo(user.profile.department)}
                 picture={user.picture}
                 name={
                   user.name.split(' ')[0].length > 10

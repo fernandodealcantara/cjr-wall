@@ -25,14 +25,22 @@ function Profile() {
 
   const handleSave = async () => {
     try {
-      const data = await api.data.postUserInfo(
-        user.sub,
-        markdown,
-        socialLinks,
-        department
-      )
-      setMarkdown(data.markdown)
-      setSocialLinks(data.socialLinks)
+      const data = await api.saveProfile({
+        department,
+        content: markdown,
+        github: socialLinks.github,
+        instagram: socialLinks.instagram,
+        linkedin: socialLinks.linkedin,
+        twitter: socialLinks.twitter,
+      })
+
+      setMarkdown(data.content)
+      setSocialLinks({
+        github: data.github,
+        instagram: data.instagram,
+        linkedin: data.linkedin,
+        twitter: data.twitter,
+      })
       setDepartment(data.department)
       alert('Perfil salvo com sucesso.')
     } catch (error) {
@@ -55,13 +63,14 @@ function Profile() {
 
   const fetchUserInfo = async () => {
     try {
-      const data = await api.data.getUserInfo(user.sub)
+      const data = await api.getProfile(user.id)
+      const { github, instagram, linkedin, twitter, content, department } = data
 
-      setMarkdown(data.markdown)
-      setSocialLinks(data.socialLinks)
-      setDepartment(data.department)
-    } catch (error) {
-      console.error(error)
+      setDepartment(department)
+      setMarkdown(content)
+      setSocialLinks({ github, instagram, linkedin, twitter })
+    } catch (err) {
+      console.error(err)
     }
   }
 
