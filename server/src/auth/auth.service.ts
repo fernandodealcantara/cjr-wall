@@ -16,7 +16,7 @@ export class AuthService {
   ) {}
 
   generateCookieForLogOut() {
-    return 'Refresh=; HttpOnly; Path=/; Max-Age=0';
+    return 'Refresh=; HttpOnly; Path=/; SameSite=None; Secure; Max-Age=0';
   }
 
   generateJwtAccessToken(id: string, email: string) {
