@@ -6,31 +6,46 @@ const AuthContext = createContext()
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null) // guarda o usuario logado
 
-  const signin = (credential, callback) => {
-    api.auth.signin(credential, (user) => {
-      if (user) {
-        setUser(user)
-        localStorage.setItem('user', JSON.stringify(user)) // PARA FINS DIDATICOS, NAO FAÇA ISSO EM PRODUÇÃO
-        callback()
-      }
-    })
+  const signin = async (credential, callback) => {
+    try {
+      const { user, expires_in } = await api.login(credential)
+      const TIMETOREFRESH = expires_in * 1000 - 5000 // tempo para atualizar o token
+
+      setUser(user)
+      setTimeout(refreshToken, TIMETOREFRESH)
+      callback()
+    } catch (error) {
+      console.error(error)
+      alert('Falha no login, tente novamente')
+    }
   }
 
-  const signout = (callback) => {
-    api.auth.signout(() => {
+  const signout = async (callback) => {
+    try {
+      await api.logout()
       setUser(false)
-      localStorage.removeItem('user') // PARA FINS DIDATICOS, NAO FAÇA ISSO EM PRODUÇÃO
       callback()
-    })
+    } catch (error) {
+      console.error(error)
+    }
+  }
+
+  const refreshToken = async () => {
+    try {
+      const { expires_in } = await api.refreshToken()
+      const user = await api.getCurrentUser()
+      const TIMETOREFRESH = expires_in * 1000 - 5000 // tempo para atualizar o token
+
+      setUser(user)
+      setTimeout(refreshToken, TIMETOREFRESH)
+    } catch (error) {
+      console.error(error)
+      setUser(false)
+    }
   }
 
   useEffect(() => {
-    const user = localStorage.getItem('user') // PARA FINS DIDATICOS, NAO FAÇA ISSO EM PRODUÇÃO
-    if (user) {
-      setUser(JSON.parse(user))
-    } else {
-      setUser(false)
-    }
+    refreshToken()
   }, [])
 
   const value = { user, signin, signout }

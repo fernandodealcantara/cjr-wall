@@ -24,13 +24,13 @@ function BrickProfile() {
 
   const fetchUserInfo = async () => {
     try {
-      const data = await api.data.getUserInfo(userId)
+      const data = await api.getProfile(userId)
 
       if (data) {
-        const { socialLinks, markdown, ...userInfo } = data
-        setUser(userInfo)
-        setMarkdown(markdown)
-        setSocialLinks(socialLinks)
+        const { github, instagram, linkedin, twitter, content } = data
+        setUser(data.user)
+        setMarkdown(content)
+        setSocialLinks({ github, instagram, linkedin, twitter })
       } else {
         setMarkdown('')
       }
@@ -58,10 +58,26 @@ function BrickProfile() {
         <p className="font-medium dark:text-white text-center">{user.name}</p>
         <p className="mt-3">Perfis de redes sociais</p>
         <div className="flex flex-wrap justify-center gap-3 mt-5">
-          <InstagramButton href={socialLinks.instagram} target="_blank" />
-          <TwitterButton href={socialLinks.twitter} target="_blank" />
-          <GitHubButton href={socialLinks.github} target="_blank" />
-          <LinkedInButton href={socialLinks.linkedin} target="_blank" />
+          <InstagramButton
+            href={socialLinks.instagram}
+            target="_blank"
+            disabled={!socialLinks.instagram.length}
+          />
+          <TwitterButton
+            href={socialLinks.twitter}
+            target="_blank"
+            disabled={!socialLinks.twitter.length}
+          />
+          <GitHubButton
+            href={socialLinks.github}
+            target="_blank"
+            disabled={!socialLinks.github.length}
+          />
+          <LinkedInButton
+            href={socialLinks.linkedin}
+            target="_blank"
+            disabled={!socialLinks.linkedin.length}
+          />
         </div>
       </div>
       <MDEditor.Markdown

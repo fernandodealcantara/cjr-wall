@@ -1,12 +1,10 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import CardsList from '../components/CardsList'
 import api from '../services/api'
 import { useWindowSize } from '../hooks/useWindowSize'
 
 function Home() {
   const [users, setUsers] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [nextPage, setNextPage] = useState(1)
   const { height, width } = useWindowSize()
 
   // calcula a altura da lista em relação ao tamanho da tela
@@ -20,25 +18,18 @@ function Home() {
   // 250 é a largura que um CardBrick ocupa (na solução proposta o tamanho é fixo)
   const usersPerRow = width ? Math.floor((width * 0.95) / USERWIDTH) : 1
 
-  const loadNextPage = async () => {
-    if (nextPage !== null && !isLoading) {
-      setIsLoading(true)
-      try {
-        const response = await api.data.getUsers(nextPage)
-   
-        const newUsers = [...users, ...response.users]
-
-        setUsers(newUsers)
-        
-        setNextPage(response.next_page)
-      } catch (error) {
-        console.error(error)
-        setNextPage(null)
-      } finally {
-        setIsLoading(false)
-      }
+  const loadUsers = async () => {
+    try {
+      const response = await api.getUsers()
+      setUsers(response)
+    } catch (error) {
+      console.error(error)
     }
   }
+
+  useEffect(() => {
+    loadUsers()
+  }, [])
 
   // Dado um vetor de usuarios [usuario1, usuario2, ...] e quantidade maxima de
   // elementos por linha (usersPerRow) que vai ser exibida na tela,
@@ -49,7 +40,7 @@ function Home() {
   const usersRows = useMemo(() => {
     const rows = []
     for (let i = 0; i < users.length; i += usersPerRow) {
-      rows.unshift(users.slice(i, i + usersPerRow))
+      rows.push(users.slice(i, i + usersPerRow))
     }
 
     return rows
@@ -57,10 +48,7 @@ function Home() {
 
   return (
     <CardsList
-      hasNextPage={nextPage}
-      isNextPageLoading={isLoading}
       rows={usersRows}
-      loadNextPage={loadNextPage}
       columnsQtd={usersPerRow}
       listHeight={listHeight}
       listItemHeight={listItemHeight}

@@ -1,0 +1,28 @@
+version: '1.1'
+services:
+  dev-db:
+    image: postgres:14.5-alpine
+    container_name: postgres
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_USER: fernando
+      POSTGRES_PASSWORD: postgrespw
+      POSTGRES_DB: fernando_db
+    volumes:
+      - $HOME/postgres-docker:/var/lib/postgresql/data
+    networks:
+      - cjr_wall
+  test-db:
+    image: postgres:14.5-alpine
+    container_name: postgres-test
+    ports:
+      - 5434:5432
+    environment:
+      POSTGRES_USER: fernando
+      POSTGRES_PASSWORD: postgrespw
+      POSTGRES_DB: fernando_db_test
+    networks:
+      - cjr_wall
+networks:
+  cjr_wall:
