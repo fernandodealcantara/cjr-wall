@@ -6,9 +6,9 @@ services:
     ports:
       - 5433:5432
     environment:
-      POSTGRES_USER: fernando
+      POSTGRES_USER: cjr_wall
       POSTGRES_PASSWORD: postgrespw
-      POSTGRES_DB: fernando_db
+      POSTGRES_DB: cjr_wall_db
     volumes:
       - $HOME/postgres-docker:/var/lib/postgresql/data
     networks:
@@ -19,9 +19,9 @@ services:
     ports:
       - 5434:5432
     environment:
-      POSTGRES_USER: fernando
+      POSTGRES_USER: cjr_wall
       POSTGRES_PASSWORD: postgrespw
-      POSTGRES_DB: fernando_db_test
+      POSTGRES_DB: cjr_wall_db_test
     networks:
       - cjr_wall
 networks:
