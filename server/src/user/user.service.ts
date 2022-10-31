@@ -16,7 +16,7 @@ export class UserService {
   constructor(private prismaService: PrismaService) {}
 
   async getUser(id: string) {
-    return await this.prismaService.user.findUniqueOrThrow({
+    return await this.prismaService.user.findUnique({
       where: { id },
       select: publicUserFields,
     });
