@@ -18,10 +18,14 @@ export class JwtRefreshTokenStrategy extends PassportStrategy(
       ]),
       secretOrKey: configService.get('JWT_REFRESH_TOKEN_SECRET'),
       ignoreExpiration: false,
+      passReqToCallback: true,
     });
   }
 
-  validate(payload: TokenPayload) {
-    return this.userService.verifyRefreshTokenId(payload.sub, payload.jti);
+  validate(request: Request, payload: TokenPayload) {
+    return this.userService.verifyRefreshToken(
+      payload.sub,
+      request?.cookies?.Refresh,
+    );
   }
 }
