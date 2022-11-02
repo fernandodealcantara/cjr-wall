@@ -34,7 +34,7 @@ export class AuthController {
       user.email,
     );
 
-    await this.userService.setRefreshToken(user.id, refreshToken.token);
+    await this.userService.setRefreshTokenId(user.id, refreshToken.jti);
 
     req.res.setHeader('Set-Cookie', refreshToken.cookie);
 
@@ -45,7 +45,7 @@ export class AuthController {
   @Post('logout')
   @HttpCode(HttpStatus.OK)
   async logout(@Req() req: AuthRequest) {
-    await this.userService.removeRefreshToken(req.user.id);
+    await this.userService.removeRefreshTokenId(req.user.id);
     const cookie = this.authService.generateCookieForLogOut();
 
     req.res.setHeader('Set-Cookie', cookie);
@@ -63,7 +63,7 @@ export class AuthController {
       req.user.email,
     );
 
-    await this.userService.setRefreshToken(req.user.id, refreshToken.token);
+    await this.userService.setRefreshTokenId(req.user.id, refreshToken.jti);
 
     req.res.setHeader('Set-Cookie', refreshToken.cookie);
 

@@ -15,6 +15,7 @@ describe('App (e2e)', () => {
   let authService: AuthService;
   let instanceSuperTest: request.SuperAgentTest;
   let access_token: string;
+  let cookies: string;
   let user: CreateUserDto = {
     id: '112345683233214050543',
     email: 'john.1@doe.com',
@@ -23,6 +24,7 @@ describe('App (e2e)', () => {
   };
 
   beforeAll(async () => {
+    jest.setTimeout(10000);
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule],
       providers: [
@@ -76,10 +78,14 @@ describe('App (e2e)', () => {
     expect(header['set-cookie']).toEqual(
       expect.arrayContaining([expect.any(String)]),
     );
+
+    cookies = header['set-cookie'][0];
   });
 
   it('/auth/refresh (GET) - should return 200', async () => {
-    const { status, body } = await instanceSuperTest.get('/auth/refresh');
+    const { status, body } = await instanceSuperTest
+      .get('/auth/refresh')
+      .set('Cookie', cookies);
 
     expect(status).toBe(200);
     expect(body).toEqual(
