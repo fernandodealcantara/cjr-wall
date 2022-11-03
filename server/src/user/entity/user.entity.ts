@@ -18,5 +18,5 @@ export class UserEntity implements User {
     picture: string;
 
     @IsString()
-    currentRefreshToken: string;
+    currentRefreshTokenId: string;
 }

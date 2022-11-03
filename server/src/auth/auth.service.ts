@@ -6,6 +6,7 @@ import { CreateUserDto } from '../user/dto/create-user.dto';
 import { OAuth2Client } from 'google-auth-library';
 import { TokenPayload } from './interface/token.interface';
 import { UpdateUserDto } from '../user/dto/update-user.dto';
+import { v4 as uuidv4 } from 'uuid';
 
 @Injectable()
 export class AuthService {
@@ -37,7 +38,8 @@ export class AuthService {
   }
 
   generateCookieWithJwtRefreshToken(id: string, email: string) {
-    const payload: TokenPayload = { sub: id, email };
+    const jti = uuidv4();
+    const payload: TokenPayload = { sub: id, email, jti };
     const token = this.jwtService.sign(payload, {
       secret: this.configService.get('JWT_REFRESH_TOKEN_SECRET'),
       expiresIn: `${this.configService.get(
@@ -49,7 +51,7 @@ export class AuthService {
       'JWT_REFRESH_TOKEN_EXPIRATION_TIME',
     )}`;
 
-    return { token, cookie };
+    return { token, cookie, jti };
   }
 
   async googleValidate(token: string) {
