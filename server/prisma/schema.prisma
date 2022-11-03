@@ -11,12 +11,12 @@ datasource db {
 }
 
 model User {
-  id                  String   @id
-  email               String   @unique
-  name                String
-  picture             String?
-  currentRefreshToken String?
-  profile             Profile?
+  id                    String   @id
+  email                 String   @unique
+  name                  String
+  picture               String?
+  currentRefreshTokenId String?  @db.Uuid
+  profile               Profile?
 }
 
 model Profile {

@@ -1,7 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import * as bcrypt from 'bcrypt';
 import { UpdateUserDto } from './dto/update-user.dto';
 
 const publicUserFields = {
@@ -59,38 +58,30 @@ export class UserService {
     });
   }
 
-  async setRefreshToken(id: string, currentRefreshToken: string) {
-    const currentRefreshTokenHash = await bcrypt.hash(
-      currentRefreshToken,
-      await bcrypt.genSalt(),
-    );
-
+  async setRefreshTokenId(id: string, currentRefreshTokenId: string) {
     return await this.prismaService.user.update({
       where: { id },
-      data: { currentRefreshToken: currentRefreshTokenHash },
+      data: { currentRefreshTokenId },
       select: { id: true, email: true },
     });
   }
 
-  async verifyRefreshToken(id: string, refreshToken: string) {
+  async verifyRefreshTokenId(id: string, refreshTokenId: string) {
     const user = await this.prismaService.user.findUniqueOrThrow({
       where: { id },
     });
 
-    if (
-      !user?.currentRefreshToken ||
-      !(await bcrypt.compare(refreshToken, user.currentRefreshToken))
-    ) {
+    if (user.currentRefreshTokenId !== refreshTokenId) {
       throw new UnauthorizedException('Refresh token is not valid');
     }
 
     return { id: user.id, email: user.email };
   }
 
-  async removeRefreshToken(id: string) {
+  async removeRefreshTokenId(id: string) {
     return await this.prismaService.user.update({
       where: { id },
-      data: { currentRefreshToken: null },
+      data: { currentRefreshTokenId: null },
       select: { id: true, email: true },
     });
   }
